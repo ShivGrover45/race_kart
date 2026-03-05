@@ -17,6 +17,13 @@ pygame.display.set_caption('Race Game')
 
 clock=pygame.time.Clock()
 
+def things_dodged(count):
+    font=pygame.font.SysFont(None,45)
+    text=font.render("Dodged: "+str(count),True,black)
+    g_display.blit(text,(0,0))
+
+
+
 def test_object(t,font):
     textSurface=font.render(t,True,black)
     return textSurface,textSurface.get_rect()
@@ -55,7 +62,7 @@ def game_loop():
     x = d_width*0.45
     y = d_height*0.80
     x_change = 0
-
+    dodged=0
     thing_startx=random.randrange(0,d_width)
     thing_starty=-600
     thing_speed=5
@@ -82,13 +89,18 @@ def game_loop():
         things(thing_startx,thing_starty,thing_width,thing_height,red)
         thing_starty+=thing_speed
         game(x, y)
-
+        things_dodged(dodged)
         if x>d_width-car_width or x<0:
             crash()
 
         if thing_starty>d_height:
             thing_starty=0-300
             thing_startx=random.randrange(0,d_width)
+            dodged = dodged + 1
+            thing_speed += 1
+            thing_width += (dodged * 1.1)
+
+
 
         if y<thing_starty+thing_height:
             print('y-crossover')
