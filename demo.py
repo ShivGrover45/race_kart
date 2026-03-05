@@ -59,6 +59,7 @@ def crash():
 
 def game_loop():
     game_exit= False
+
     x = d_width*0.45
     y = d_height*0.80
     x_change = 0
